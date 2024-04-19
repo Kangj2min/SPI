@@ -33,6 +33,8 @@ output reg [7:0] byte_data_received;
 output reg data_out_ready;
 input [7:0] Tx_byte_data;
 input data_in_val;
+output reg [2:0] bitcnt;
+
 
 // CLK Synchronizing
 reg [2:0] SCKr; always @(posedge clk) SCKr <= {SCKr[1:0],SCK};
@@ -47,7 +49,7 @@ wire SSEL_startmessage = (SSELr[2:1] ==2'b10); // message starts at falling edge
 wire SSEL_endmessage = (SSELr[2:1] == 2'b01); //message stops at rising edge
 reg [1:0] MOSIr; always @(posedge clk) MOSIr <= {MOSIr[0],MOSI} ;
 wire MOSI_data = MOSIr[1];
-output reg [2:0] bitcnt;
+
 
 always @(posedge clk) begin
     if(~SSEL_active) begin 

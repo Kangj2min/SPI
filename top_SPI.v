@@ -29,7 +29,8 @@ SPI_MOSI,
 SPI_CS,
 led,
 byte_data_received,
-bitcnt
+bitcnt,
+data_out_ready
     );
 input clk;
 input rst_n;
@@ -39,11 +40,12 @@ input wire SPI_MOSI;
 input wire SPI_CS;
 output reg [7:0] led;
 output [7:0] byte_data_received;
-output [3:0] bitcnt;
+output wire [2:0] bitcnt;
+output wire data_out_ready;
 //clock_divider u_clock_divider();
 wire [7:0] count;
 //wire [7:0] byte_data_received;
-wire data_out_ready;
+//wire data_out_ready;
 reg [7:0] Tx_byte_data;
 //reg data_in_val;
 //wire fifo_empty;
@@ -71,7 +73,7 @@ SPI U_SPI (
 //reg flag=1'b0;
 
 always @(posedge clk or negedge rst_n) begin
-    if(!rst_n) begin
+    if(rst_n) begin
       led<=8'b0;
     end else begin
         if(data_out_ready) begin
